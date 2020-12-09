@@ -1,0 +1,1667 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "K2 Workflow Api - V1"
+  },
+  "host": "7-eleven-dev.onk2.com",
+  "basePath": "/Api/Workflow/V1",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/op/{operation}": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "summary": "Refresh Endpoint",
+        "operationId": "RefreshEndpoint",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "operation",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a message verify the success of the operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Returns a message verify the success of the operation",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "x-ms-visibility": "internal"
+      }
+    },
+    "/serverEvents/{serialNumber}": {
+      "get": {
+        "tags": [
+          "ServerEvents"
+        ],
+        "summary": "Get Server Event",
+        "operationId": "GetServerEvent",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "serialNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a server event json definition string.",
+            "schema": {
+              "$ref": "#/definitions/ServerEventDataResponse"
+            }
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Returns a server event json definition string.",
+            "schema": {
+              "$ref": "#/definitions/ServerEventDataResponse"
+            }
+          }
+        }
+      }
+    },
+    "/serverEvents/{serialNumber}/finish": {
+      "post": {
+        "tags": [
+          "ServerEvents"
+        ],
+        "summary": "Finish Server Event",
+        "description": "Send a finish response to an async server task awaiting a response",
+        "operationId": "FinishServerEvent",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "serialNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userDefinedFields",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateFieldsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Send a finish response to an async server task awaiting a response"
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Send a finish response to an async server task awaiting a response"
+          }
+        }
+      }
+    },
+    "/tasks": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Get Tasks",
+        "operationId": "GetTasks",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "All",
+              "Allocated",
+              "Sleeping",
+              "AllocatedAndShared",
+              "AllExcludingOriginator"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a list of tasks.",
+            "schema": {
+              "$ref": "#/definitions/TasksResponse"
+            }
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Returns a list of tasks.",
+            "schema": {
+              "$ref": "#/definitions/TasksResponse"
+            }
+          }
+        },
+        "x-ms-visibility": "advanced"
+      }
+    },
+    "/tasks/{serialNumber}": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Get Task",
+        "operationId": "GetTask",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "serialNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a task.",
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Returns a task.",
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          }
+        },
+        "x-ms-visibility": "advanced"
+      }
+    },
+    "/tasks/{serialNumber}/actions": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Get Task Actions",
+        "operationId": "GetTaskActions",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "serialNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gets a list of Actions for the serial number specified.",
+            "schema": {
+              "$ref": "#/definitions/TaskActionsResponse"
+            }
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Gets a list of Actions for the serial number specified.",
+            "schema": {
+              "$ref": "#/definitions/TaskActionsResponse"
+            }
+          }
+        },
+        "x-ms-visibility": "advanced"
+      }
+    },
+    "/tasks/{serialNumber}/actions/redirect": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Redirect Task",
+        "operationId": "RedirectTask",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "serialNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "redirectData",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserDefinedRedirect"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Redirects a task to the specified user and optionally updates workflow data and xml fields. No response is returned."
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Redirects a task to the specified user and optionally updates workflow data and xml fields. No response is returned."
+          }
+        },
+        "x-ms-visibility": "advanced"
+      }
+    },
+    "/tasks/{serialNumber}/actions/sleep": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Sleep Task",
+        "operationId": "SleepTask",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "serialNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "sleepData",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserDefinedSleep"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sleeps a task for either the specified duration or until the specified date. No response is returned."
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Sleeps a task for either the specified duration or until the specified date. No response is returned."
+          }
+        },
+        "x-ms-visibility": "advanced"
+      }
+    },
+    "/tasks/{serialNumber}/actions/release": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Release Task",
+        "operationId": "ReleaseTask",
+        "consumes": [],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "serialNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Releases a task. No response is returned."
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified Task was not found."
+          },
+          "default": {
+            "description": "Releases a task. No response is returned."
+          }
+        },
+        "x-ms-visibility": "advanced"
+      }
+    },
+    "/tasks/{serialNumber}/actions/wake": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Wake Task",
+        "operationId": "WakeTask",
+        "consumes": [],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "serialNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Wakes up a task. No response is returned."
+          },
+          "200": {
+            "description": "Task was already awake.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "The specified Task was not found."
+          },
+          "default": {
+            "description": "Wakes up a task. No response is returned."
+          }
+        },
+        "x-ms-visibility": "advanced"
+      }
+    },
+    "/tasks/{serialNumber}/actions/assign": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Assign Task",
+        "operationId": "AssignTask",
+        "consumes": [],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "serialNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Assigns a task. No response is returned."
+          },
+          "200": {
+            "description": "Task was already assigned.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Assigns a task. No response is returned."
+          }
+        },
+        "x-ms-visibility": "advanced"
+      }
+    },
+    "/tasks/{serialNumber}/actions/{customAction}": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Perform Custom Action",
+        "operationId": "PerformCustomAction",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "serialNumber",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "customAction",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userDefinedFields",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UpdateFieldsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Custom Action Taken."
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Custom Action Taken."
+          }
+        },
+        "x-ms-visibility": "advanced"
+      }
+    },
+    "/workflows": {
+      "get": {
+        "tags": [
+          "Workflows"
+        ],
+        "summary": "Get Workflows",
+        "description": "Get a list of available workflows.",
+        "operationId": "GetWorkflows",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Startable or Owned. Default = Startable",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "Startable",
+              "Owned"
+            ],
+            "x-ms-summary": "Workflow type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a list of workflows.",
+            "schema": {
+              "$ref": "#/definitions/WorkflowLabelsResponse[WorkflowLabel]"
+            }
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Returns a list of workflows.",
+            "schema": {
+              "$ref": "#/definitions/WorkflowLabelsResponse[WorkflowLabel]"
+            }
+          }
+        }
+      }
+    },
+    "/workflows/{id}": {
+      "get": {
+        "tags": [
+          "Workflows"
+        ],
+        "summary": "Get Workflow",
+        "operationId": "GetWorkflow",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a workflow metadata definition.",
+            "schema": {
+              "$ref": "#/definitions/WorkflowDataResponse"
+            }
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Returns a workflow metadata definition.",
+            "schema": {
+              "$ref": "#/definitions/WorkflowDataResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Workflows"
+        ],
+        "summary": "Start Workflow",
+        "description": "Creates and starts a new workflow instance.",
+        "operationId": "StartWorkflow",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/x-www-form-urlencoded"
+        ],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Select a workflow",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-ms-summary": "Workflow",
+            "x-ms-dynamic-values": {
+              "operationId": "GetWorkflows",
+              "parameters": {},
+              "value-collection": "workflows",
+              "value-path": "id",
+              "value-title": "systemName"
+            }
+          },
+          {
+            "name": "instance",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserDefinedWorkflowInstance"
+            },
+            "x-ms-summary": "Workflow Instance Details"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Creates and starts a new workflow instance.",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Creates and starts a new workflow instance.",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "/workflows/{id}/schema": {
+      "get": {
+        "tags": [
+          "Workflows"
+        ],
+        "summary": "Get Workflow Schema",
+        "operationId": "GetWorkflowSchema",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the JSON schema for a particular workflow.",
+            "schema": {
+              "$ref": "#/definitions/WorkflowDefinitionSchema"
+            }
+          },
+          "400": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "404": {
+            "description": "Returns information about the error that occurred.",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "default": {
+            "description": "Returns the JSON schema for a particular workflow.",
+            "schema": {
+              "$ref": "#/definitions/WorkflowDefinitionSchema"
+            }
+          }
+        },
+        "x-ms-visibility": "internal"
+      }
+    }
+  },
+  "definitions": {
+    "ServerEventDataResponse": {
+      "type": "object",
+      "properties": {
+        "serialNumber": {
+          "type": "string"
+        },
+        "workflowName": {
+          "type": "string"
+        },
+        "workflowDisplayName": {
+          "type": "string"
+        },
+        "workflowCategory": {
+          "type": "string"
+        },
+        "workflowInstanceID": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "workflowInstanceFolio": {
+          "type": "string"
+        },
+        "activityInstanceID": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "activityInstanceDestinationID": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "activityName": {
+          "type": "string"
+        },
+        "eventName": {
+          "type": "string"
+        },
+        "eventDescription": {
+          "type": "string"
+        },
+        "eventInstance": {
+          "$ref": "#/definitions/IEventInstance"
+        },
+        "dataFields": {
+          "type": "object"
+        },
+        "xmlFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserDefinedXmlField"
+          }
+        },
+        "itemReferences": {
+          "type": "object"
+        },
+        "workflowInstanceDataFieldsString": {
+          "type": "string",
+          "readOnly": true
+        },
+        "itemReferencesString": {
+          "type": "string",
+          "readOnly": true
+        },
+        "viewFlowURL": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "serialNumber": "string",
+        "workflowName": "string",
+        "workflowDisplayName": "string",
+        "workflowCategory": "string",
+        "workflowInstanceID": 0,
+        "workflowInstanceFolio": "string",
+        "activityInstanceID": 0,
+        "activityInstanceDestinationID": 0,
+        "activityName": "string",
+        "eventName": "string",
+        "eventDescription": "string",
+        "eventInstance": {
+          "description": "string",
+          "expectedDuration": 0,
+          "id": 0,
+          "metadata": "string",
+          "name": "string",
+          "priority": 0,
+          "startDate": "2017-10-26T20:46:16.388Z"
+        },
+        "dataFields": {
+          "Example": "string"
+        },
+        "xmlFields": [
+          {
+            "name": "string",
+            "value": "string"
+          }
+        ],
+        "itemReferences": {
+          "Customer_Name": {
+            "1": {
+              "CustId": 1,
+              "Region": 1,
+              "Parameters": "string"
+            }
+          }
+        },
+        "workflowInstanceDataFieldsString": "string",
+        "itemReferencesString": "string",
+        "viewFlowURL": "string"
+      }
+    },
+    "IEventInstance": {
+      "type": "object",
+      "properties": {
+        "Description": {
+          "type": "string",
+          "readOnly": true
+        },
+        "ExpectedDuration": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "ID": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "MetaData": {
+          "type": "string",
+          "readOnly": true
+        },
+        "Name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "Priority": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "StartDate": {
+          "format": "date-time",
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "UserDefinedXmlField": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "UpdateFieldsRequest": {
+      "type": "object",
+      "properties": {
+        "XmlFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserDefinedXmlField"
+          }
+        },
+        "ItemReferences": {
+          "type": "object"
+        },
+        "DataFields": {
+          "type": "object"
+        }
+      },
+      "example": {
+        "xmlFields": [
+          {
+            "name": "string",
+            "value": "string"
+          }
+        ],
+        "itemReferences": {
+          "Customer_Name": {
+            "1": {
+              "CustId": 1,
+              "Region": 1,
+              "Parameters": "string"
+            }
+          }
+        },
+        "dataFields": {
+          "Example": "string"
+        }
+      }
+    },
+    "TasksResponse": {
+      "type": "object",
+      "properties": {
+        "itemCount": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TaskLite"
+          }
+        }
+      }
+    },
+    "TaskLite": {
+      "type": "object",
+      "properties": {
+        "serialNumber": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "Open",
+            "Completed",
+            "Sleep",
+            "Allocated",
+            "Available"
+          ],
+          "type": "string"
+        },
+        "taskStartDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "sleepUntil": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "priority": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "formURL": {
+          "type": "string"
+        },
+        "viewFlowURL": {
+          "type": "string"
+        },
+        "workflowID": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "workflowName": {
+          "type": "string"
+        },
+        "workflowDisplayName": {
+          "type": "string"
+        },
+        "workflowCategory": {
+          "type": "string"
+        },
+        "workflowInstanceID": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "workflowInstanceFolio": {
+          "type": "string"
+        },
+        "activityInstanceID": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "activityInstanceDestinationID": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "activityName": {
+          "type": "string"
+        },
+        "eventName": {
+          "type": "string"
+        },
+        "eventDescription": {
+          "type": "string"
+        },
+        "originator": {
+          "$ref": "#/definitions/User"
+        },
+        "actions": {
+          "$ref": "#/definitions/TaskActionsResponse"
+        },
+        "instruction": {
+          "type": "string"
+        },
+        "dueDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "fqn": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "manager": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        }
+      }
+    },
+    "TaskActionsResponse": {
+      "type": "object",
+      "properties": {
+        "nonBatchableActions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "batchableActions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "systemActions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Task": {
+      "type": "object",
+      "properties": {
+        "serialNumber": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "Open",
+            "Completed",
+            "Sleep",
+            "Allocated",
+            "Available"
+          ],
+          "type": "string"
+        },
+        "taskStartDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "sleepUntil": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "priority": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "formURL": {
+          "type": "string"
+        },
+        "viewFlowURL": {
+          "type": "string"
+        },
+        "workflowID": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "workflowName": {
+          "type": "string"
+        },
+        "workflowDisplayName": {
+          "type": "string"
+        },
+        "workflowCategory": {
+          "type": "string"
+        },
+        "workflowInstanceID": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "workflowInstanceFolio": {
+          "type": "string"
+        },
+        "activityInstanceID": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "activityInstanceDestinationID": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "activityName": {
+          "type": "string"
+        },
+        "eventName": {
+          "type": "string"
+        },
+        "eventDescription": {
+          "type": "string"
+        },
+        "originator": {
+          "$ref": "#/definitions/User"
+        },
+        "actions": {
+          "$ref": "#/definitions/TaskActionsResponse"
+        },
+        "workflowInstanceDataFields": {
+          "type": "object"
+        },
+        "activityDataFields": {
+          "type": "object"
+        },
+        "workflowInstanceXmlFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserDefinedXmlField"
+          }
+        },
+        "itemReferences": {
+          "type": "object"
+        },
+        "instruction": {
+          "type": "string"
+        },
+        "workflowInstanceDataFieldsString": {
+          "type": "string",
+          "readOnly": true
+        },
+        "itemReferencesString": {
+          "type": "string",
+          "readOnly": true
+        },
+        "dueDate": {
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "example": {
+        "serialNumber": "string",
+        "status": "Open",
+        "taskStartDate": "2017-10-26T18:38:06.949Z",
+        "sleepUntil": "2017-10-26T18:38:06.949Z",
+        "priority": 0,
+        "formURL": "string",
+        "viewFlowURL": "string",
+        "workflowID": 0,
+        "workflowName": "string",
+        "workflowDisplayName": "string",
+        "workflowCategory": "string",
+        "workflowInstanceID": 0,
+        "workflowInstanceFolio": "string",
+        "activityInstanceID": 0,
+        "activityInstanceDestinationID": 0,
+        "activityName": "string",
+        "eventName": "string",
+        "eventDescription": "string",
+        "originator": {
+          "username": "string",
+          "fqn": "string",
+          "email": "string",
+          "manager": "string",
+          "displayName": "string"
+        },
+        "actions": {
+          "nonBatchableActions": [
+            "string"
+          ],
+          "batchableActions": [
+            "string"
+          ],
+          "systemActions": [
+            "string"
+          ]
+        },
+        "workflowInstanceDataFields": {
+          "Example": "string"
+        },
+        "activityDataFields": {
+          "Example": "string"
+        },
+        "workflowInstanceXmlFields": [
+          {
+            "name": "string",
+            "value": "string"
+          }
+        ],
+        "itemReferences": {
+          "Customer_Name": {
+            "1": {
+              "CustId": 1,
+              "Region": 1,
+              "Parameters": "string"
+            }
+          }
+        },
+        "instruction": "string",
+        "workflowInstanceDataFieldsString": "string",
+        "itemReferencesString": "string",
+        "dueDate": "2017-10-26T18:38:06.949Z"
+      }
+    },
+    "UserDefinedRedirect": {
+      "required": [
+        "RedirectTo"
+      ],
+      "type": "object",
+      "properties": {
+        "RedirectTo": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "RedirectTo": "string"
+      }
+    },
+    "UserDefinedSleep": {
+      "type": "object",
+      "properties": {
+        "SleepFor": {
+          "format": "int32",
+          "maximum": 2147483647,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "SleepUntil": {
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "example": {
+        "SleepFor": 0,
+        "SleepUntil": "2017-05-15T17:47:44.04Z"
+      }
+    },
+    "WorkflowLabelsResponse[WorkflowLabel]": {
+      "type": "object",
+      "properties": {
+        "itemCount": {
+          "format": "int32",
+          "type": "integer",
+          "readOnly": true
+        },
+        "workflows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/WorkflowLabel"
+          }
+        }
+      }
+    },
+    "WorkflowLabel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "defaultVersionId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "folder": {
+          "type": "string"
+        },
+        "systemName": {
+          "type": "string"
+        }
+      }
+    },
+    "WorkflowDataResponse": {
+      "type": "object",
+      "properties": {
+        "workflowInfo": {
+          "$ref": "#/definitions/WorkflowDefinition"
+        },
+        "workflowSchema": {
+          "type": "string"
+        }
+      }
+    },
+    "WorkflowDefinition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "folder": {
+          "type": "string"
+        },
+        "systemName": {
+          "type": "string"
+        },
+        "expectedDuration": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    },
+    "UserDefinedWorkflowInstance": {
+      "type": "object",
+      "properties": {
+        "folio": {
+          "type": "string"
+        },
+        "expectedDuration": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "priority": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "dataFields": {
+          "type": "object"
+        },
+        "xmlFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UserDefinedXmlField"
+          }
+        },
+        "itemReferences": {
+          "type": "object"
+        },
+        "workflow": {
+          "type": "object"
+        }
+      },
+      "example": {
+        "folio": "Order #12345",
+        "expectedDuration": 86400,
+        "priority": 1,
+        "dataFields": {
+          "Order Index": "string",
+          "Order Index Result": false
+        },
+        "xmlFields": [
+          {
+            "name": "Order Items",
+            "value": "<OrderItems><Item Id=\"1000\"></Item><Item Id=\"51400\"></Item></OrderItems>"
+          },
+          {
+            "name": "ItemReferences",
+            "value": "<itemReferences><itemReference primary=\"true\" name=\"Customer_Name\" type=\"SmartObjectItem\" displayName=\"Customer Name\"><settings><method><objectName>Customer_Name</objectName><objectTypes><type>List</type></objectTypes><methodName>Load</methodName><methodType>read</methodType>      </method>    </settings>  </itemReference></itemReferences>"
+          }
+        ],
+        "itemReferences": {
+          "Customer_Name": {
+            "1": {
+              "CustId": 1,
+              "Region": 1,
+              "Parameters": "string"
+            }
+          },
+          "xmlContent": "string"
+        }
+      },
+      "x-ms-dynamic-schema": {
+        "operationId": "GetWorkflowSchema",
+        "parameters": {
+          "id": {
+            "parameter": "id"
+          }
+        },
+        "value-path": "workflow"
+      }
+    },
+    "WorkflowDefinitionSchema": {
+      "type": "object",
+      "properties": {},
+      "example": {
+        "workflow": {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "type": "object",
+          "properties": {
+            "folio": {
+              "type": "string"
+            },
+            "priority": {
+              "type": "number",
+              "x-ms-visibility": "advanced"
+            },
+            "expectedDuration": {
+              "type": "number",
+              "x-ms-visibility": "advanced"
+            },
+            "xmlFields": {
+              "type": "string",
+              "x-ms-visibility": "advanced"
+            },
+            "dataFields": {
+              "type": "object",
+              "x-ms-visibility": "advanced"
+            },
+            "itemReferences": {
+              "type": "object",
+              "x-ms-visibility": "advanced"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic",
+      "description": "Basic HTTP Authentication"
+    },
+    "oauth2": {
+      "type": "oauth2",
+      "description": "Appit AAD",
+      "flow": "implicit",
+      "authorizationUrl": "https://login.windows.net/711com.onmicrosoft.com/oauth2/authorize",
+      "scopes": {}
+    }
+  },
+  "security": [
+    {
+      "basic": []
+    },
+    {
+      "oauth2": []
+    }
+  ]
+}
